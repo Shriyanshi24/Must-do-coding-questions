@@ -1,0 +1,77 @@
+public class Main
+{
+    private ListNode head;
+    
+    // CREATION
+    private static class ListNode
+    {
+        private int data;
+        private ListNode next;
+        
+        public ListNode(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    
+    // Printing
+    public void print()
+    {
+        ListNode curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    
+    //finding length
+    public int length()
+    {
+        ListNode curr=head;
+        int count=0;
+        while(curr!=null)
+        {
+            count++;
+            curr=curr.next;
+        }
+        return count;
+    }
+    
+    // middle node using two passes
+    public void middleNode(int pos)
+    {
+        ListNode curr=head;
+        int count=1;
+        while(curr!=null)
+        {
+            if(count==pos)
+            System.out.println(curr.data);
+            
+            curr=curr.next;
+            count++;
+        }
+        
+    }
+	public static void main(String[] args) 
+	{
+	    Main ll=new Main();
+	    
+	    ll.head=new ListNode(10);
+	    ListNode second=new ListNode(20);
+	    ListNode third=new ListNode(30);
+	    ListNode fourth=new ListNode(40);
+	    ListNode fifth=new ListNode(50);
+	    ll.head.next=second;
+	    second.next=third;
+	    third.next=fourth;
+	    fourth.next=fifth;
+	    
+	    int pos=ll.length();
+	    ll.middleNode((pos/2)+1);
+	    ll.print();
+	}
+}

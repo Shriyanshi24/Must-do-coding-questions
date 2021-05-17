@@ -1,0 +1,169 @@
+import java.util.*;
+public class Main
+{
+    private Node head;
+    private static class Node
+    {
+        private int data;
+        private Node next;
+        public Node(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    public void print(Node head)
+    {
+        Node curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    public Node reverse(Node p)
+    {
+        if(p.next==null)
+        {
+            Node head=p;
+            return head;
+        }
+        Node head=reverse(p.next);
+        Node q=p.next;
+        q.next=p;
+        p.next=null;
+        return head;
+    }
+    public int length(Node head)
+    {
+        Node curr=head;
+        int count=0;
+        while(curr!=null)
+        {
+            curr=curr.next;
+            count++;
+        }
+        return count;
+    }
+    public Node addNode(Node head,int d)
+    {
+        Node curr=head;
+        while(curr.next!=null)
+        {
+            curr=curr.next;
+        }
+        while(d!=0)
+        {
+            curr.next=new Node(0);
+            d--;
+            curr=curr.next;
+        }
+        return head;
+    }
+    
+    public Node addtwono(Node head1,Node head2)
+    {
+        int l1=length(head1);
+        int l2=length(head2);
+        int diff=Math.abs(l1-l2);
+        
+        // reverse both list for easy addition
+        head1=reverse(head1);
+        head2=reverse(head2);
+        
+        Node head3=null;
+        Node temp=null;
+        
+        // adding node with data 0 in list having less nodes to make both list equal in length
+        if(l1<l2)
+        {
+            head1=addNode(head1,diff);
+        }
+        else if(l2<l1)
+        {
+            head2=addNode(head2,diff);
+        }
+        
+            int addition,carry=0,divide=0,remainder=0;
+            Node curr=head1;
+            Node prev=head2;
+
+            while(curr!=null && prev!=null)
+            {
+                addition=prev.data+curr.data+carry;
+                divide=addition/10;
+                remainder=addition%10;
+                carry=divide;
+                
+                if(carry==0)
+                {
+                    // creating a ll
+                    if(head3==null)
+                    {
+                        head3=new Node(addition);
+                        temp=head3;
+                    }
+                    // joining further nodes
+                    else
+                    {
+                        temp.next=new Node(addition);
+                        //print(head3);
+                        temp=temp.next;
+                    }
+                }
+                else
+                {
+                    if(head3==null)
+                    {
+                        head3=new Node(remainder);
+                        temp=head3;
+                    }
+                    else
+                    {
+                        temp.next=new Node(remainder);
+                        temp=temp.next;
+                    }
+                }
+                curr=curr.next;
+                prev=prev.next;
+            }
+            if(carry!=0)
+            {
+                temp.next=new Node(carry);
+            }
+            head3=reverse(head3);
+            return head3;
+    }
+    
+    
+    
+	public static void main(String[] args) 
+	{
+	    Main ll=new Main();
+	    Scanner s=new Scanner(System.in);
+	    int n=s.nextInt();
+	    int m=s.nextInt();
+	    Node head1=new Node(s.nextInt());
+	    Node tail1=head1;
+	    while(n!=1)
+	    {
+	        tail1.next=new Node(s.nextInt());
+	        tail1=tail1.next;
+	        n--;
+	    }
+	    Node head2=new Node(s.nextInt());
+	    Node tail2=head2;
+	    while(m!=1)
+	    {
+	        tail2.next=new Node(s.nextInt());
+	        tail2=tail2.next;
+	        m--;
+	    }
+	    ll.print(head1);
+	    ll.print(head2);
+	    ll.head=ll.addtwono(head1,head2);
+	    ll.print(ll.head);
+	}
+}

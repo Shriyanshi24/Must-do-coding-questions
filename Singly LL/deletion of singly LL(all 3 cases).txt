@@ -1,0 +1,116 @@
+public class Main
+{
+    private ListNode head;
+    
+    // CREATION
+    private static class ListNode
+    {
+        private int data;
+        private ListNode next;
+        
+        public ListNode(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    
+    // Printing
+    public void print()
+    {
+        ListNode curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    
+    // DELETION OF FIRST NODE
+    public ListNode deleteFirst()
+    {
+        if(head==null)
+        {
+            return null;
+        }
+        ListNode temp=head;
+        head=head.next;
+        temp.next=null;
+        return temp;
+    }
+    
+    // DELETION OF LAST NODE
+    public ListNode deleteLast()
+    {
+        if(head==null)
+        {
+            return null;
+        }
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr.next!=null)
+        {
+            prev=curr;
+            curr=curr.next;
+        }
+        prev.next=curr.next;
+        return curr;
+    }
+    
+    // DELETION AT MIDDLE
+    public ListNode deletemid(int pos)
+    {
+        if(pos==1)
+        {
+            head=head.next;
+            return head;
+        }
+        else
+        {
+            int count=1;
+            ListNode prev=null;
+            ListNode curr=head;
+            
+            while(count<pos)
+            {
+                prev=curr;
+                curr=curr.next;
+                count++;
+            }
+            prev.next=curr.next;
+            return curr;
+        }
+    }
+    
+	public static void main(String[] args) 
+	{
+	    Main ll=new Main();
+	    
+	    ll.head=new ListNode(10);
+	    ListNode second=new ListNode(20);
+	    ListNode third=new ListNode(30);
+	    ListNode fourth=new ListNode(40);
+	    ListNode fifth=new ListNode(50);
+	    ll.head.next=second;
+	    second.next=third;
+	    third.next=fourth;
+	    fourth.next=fifth;
+	    
+	    ll.print();
+	    
+	    // delete MIDDLE
+	    ll.deletemid(3);
+	    ll.print();
+	    
+	    //delete FIRST
+	    ll.deleteFirst();
+	    ll.print();
+	    
+	    //delete LAST
+	    ll.deleteLast();
+	    ll.print();
+	   
+	}
+}

@@ -1,0 +1,115 @@
+
+public class HelloWorld
+{
+    private ListNode head;
+    
+    private static class ListNode
+    {
+        private int data;
+        private ListNode next;
+        public ListNode(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    public void print(ListNode head)
+    {
+        ListNode curr=head;
+        while(curr.next!=head)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print(curr.data+"->"+"null");
+        System.out.println();
+    }
+    
+    public ListNode midOdd(ListNode head)
+    {
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=head && fast.next!=head)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    
+    public ListNode midEven(ListNode head)
+    {
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast.next!=head && fast.next.next!=head)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    
+    public int length(ListNode head)
+    {
+        int c=0;
+        ListNode curr=head;
+        while(curr!=head)
+        {
+            c++;
+            curr=curr.next;
+        }
+        return c;
+    }
+    public void split(ListNode head)
+    {
+        int l=length(head);
+        ListNode mid;
+        ListNode head1;
+        ListNode head2;
+        if(l%2==0)
+        {
+            mid=midEven(head);
+            //System.out.println("middle of even is: "+mid.data);
+            head2=mid.next;
+            mid.next=head;
+            head1=head;
+            ListNode curr=head2;
+            while(curr.next!=head)
+            {
+                curr=curr.next;
+            }
+            curr.next=head2;
+            //System.out.println(head1.data+" "+head2.data);
+        }
+        else
+        {
+            mid=midOdd(head);
+            head2=mid.next;
+            mid.next=head;
+            head1=head;
+            ListNode curr=head2;
+            while(curr.next!=head)
+            {
+                curr=curr.next;
+            }
+            curr.next=head2;
+        }
+        print(head1);
+        print(head2);
+    }
+    public static void main(String[] args)
+    {
+        HelloWorld ll=new HelloWorld();
+        ll.head=new ListNode(1);
+        ListNode second=new ListNode(2);
+        ListNode third=new ListNode(3);
+        ListNode fourth=new ListNode(4);
+        
+        ll.head.next=second;
+        second.next=third;
+        third.next=fourth;
+        fourth.next=ll.head;
+        ll.print(ll.head);
+        ll.split(ll.head);
+    }
+}

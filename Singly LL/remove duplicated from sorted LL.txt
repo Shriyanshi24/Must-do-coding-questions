@@ -1,0 +1,72 @@
+
+public class HelloWorld
+{
+    private Listnode head;
+    
+    private static class Listnode
+    {
+        private int data;
+        private Listnode next;
+        
+        public Listnode(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    
+    // printing the LL
+    public void print()
+    {
+        Listnode curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    
+    // remove duplicates in sorted LL
+    public Listnode removeDuplicates()
+    {
+        Listnode prev=head;
+        Listnode curr=head.next;
+        while(curr!=null)
+        {
+            if(prev.data==curr.data)
+            {
+                prev.next=curr.next;
+                curr=curr.next;
+            }
+            else
+            {
+                prev=prev.next;
+                curr=curr.next;
+            }
+        }
+        return head;
+    }
+    
+    public static void main(String[] args)
+    {
+        HelloWorld ll=new HelloWorld();
+        ll.head=new Listnode(1);
+        Listnode second=new Listnode(1);
+        Listnode third=new Listnode(2);
+        Listnode fourth=new Listnode(3);
+        Listnode fifth=new Listnode(3);
+        Listnode sixth=new Listnode(3);
+        
+        ll.head.next=second;
+        second.next=third;
+        third.next=fourth;
+        fourth.next=fifth;
+        fifth.next=sixth;
+        
+        ll.removeDuplicates();
+        ll.print();
+        
+    }
+}

@@ -1,0 +1,60 @@
+import java.util.*;
+class Node
+{
+    int data;
+    Node next;
+    Node(int data)
+    {
+        this.data=data;
+        this.next=null;
+    }
+}
+class LL
+{
+    public void print(Node head)
+    {
+        Node curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    public Node insertNode(Node head, Node newnode)
+    {
+        Node curr=head;
+        Node temp=null;
+        while(curr!=null && curr.data<newnode.data)
+        {
+            temp=curr;
+            curr=curr.next;
+        }
+        newnode.next=curr;
+        temp.next=newnode;
+        return head;
+    }
+}
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        LL ll=new LL();
+        Node head=new Node(s.nextInt());
+        Node tail=head;
+        while(n!=1)
+        {
+            tail.next=new Node(s.nextInt());
+            tail=tail.next;
+            n--;
+        }
+        Node newnode=new Node(11);
+        ll.print(head);
+        ll.insertNode(head,newnode);
+        ll.print(head);
+        
+    }
+}

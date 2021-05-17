@@ -1,0 +1,80 @@
+
+
+
+public class HelloWorld
+{
+    private ListNode head;
+    
+    private static class ListNode
+    {
+        private int data;
+        private ListNode next;
+        
+        public ListNode(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    
+    // printing the LL
+    public void print()
+    {
+        ListNode curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    
+        // find starting node of loop
+        public ListNode getStartingNode(ListNode slow,ListNode head)
+        {
+            ListNode temp=head;
+            while(temp!=slow)
+            {
+                temp=temp.next;
+                slow=slow.next;
+            }
+            return temp;
+        }
+        
+        // detect a loop
+        public ListNode detectLoop(ListNode head)
+        {
+            ListNode fast=head;
+            ListNode slow=head;
+            while(fast!=null && fast.next!=null)
+            {
+                fast=fast.next.next;
+                slow=slow.next;
+                if(slow==fast)
+                {
+                    return getStartingNode(slow,head);
+                }
+            }
+            return null;
+        }
+    public static void main(String[] args)
+    {
+        HelloWorld ll=new HelloWorld();
+        ll.head=new ListNode(1);
+        ListNode second=new ListNode(2);
+        ListNode third=new ListNode(3);
+        ListNode fourth=new ListNode(4);
+        ListNode fifth=new ListNode(5);
+        ListNode six=new ListNode(6);
+        
+        ll.head.next=second;
+        second.next=third;
+        third.next=fourth;
+        fourth.next=fifth;
+        fifth.next=six;
+        six.next=third;
+        
+        System.out.println("loop starts from :"+ll.detectLoop(ll.head).data);
+    }
+}

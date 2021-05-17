@@ -1,0 +1,70 @@
+
+public class HelloWorld
+{
+    private Listnode head;
+    
+    private static class Listnode
+    {
+        private int data;
+        private Listnode next;
+        
+        public Listnode(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    
+    // printing the LL
+    public void print()
+    {
+        Listnode curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    
+    // sorting a linked list
+    public Listnode sorting()
+    {
+        Listnode prev=head;
+        Listnode curr;
+        while(prev.next!=null)
+        {
+            curr=prev.next;
+            while(curr!=null)
+            {
+                if(prev.data>curr.data)
+                {
+                    int d=prev.data;
+                    prev.data=curr.data;
+                    curr.data=d;
+                }
+                curr=curr.next;
+            }
+            prev=prev.next;
+        }
+        return head;
+    }
+    
+    public static void main(String[] args)
+    {
+        HelloWorld ll=new HelloWorld();
+        ll.head=new Listnode(100);
+        Listnode second=new Listnode(15);
+        Listnode third=new Listnode(57);
+        Listnode fourth=new Listnode(8);
+        
+        ll.head.next=second;
+        second.next=third;
+        third.next=fourth;
+        
+        ll.sorting();
+        ll.print();
+        
+    }
+}

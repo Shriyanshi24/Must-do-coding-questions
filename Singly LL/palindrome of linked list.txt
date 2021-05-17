@@ -1,0 +1,142 @@
+import java.util.*;
+public class Main
+{
+    private Node head;
+    private static class Node
+    {
+        private int data;
+        private Node next;
+        public Node(int data)
+        {
+            this.data=data;
+            this.next=null;
+        }
+    }
+    public void print(Node head)
+    {
+        Node curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    public Node reverse(Node p)
+    {
+        if(p.next==null)
+        {
+            Node head=p;
+            return head;
+        }
+        Node head=reverse(p.next);
+        Node q=p.next;
+        q.next=p;
+        p.next=null;
+        return head;
+    }
+    public int length(Node head)
+    {
+        Node curr=head;
+        int count=0;
+        while(curr!=null)
+        {
+            curr=curr.next;
+            count++;
+        }
+        return count;
+    }
+    public Node midOdd(Node head)
+    {
+        Node slow=null;
+        Node fast=head;
+        while(fast!=null && fast.next!=null)
+        {
+            if(slow==null)
+            {
+                slow=head;
+            }
+            else
+            {
+                slow=slow.next;
+            }
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    
+    public Node midEven(Node head)
+    {
+        Node slow=head;
+        Node fast=head;
+        while(fast.next!=null && fast.next.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    
+    public boolean palindrome(Node head)
+    {
+        int l=length(head);
+        if(l%2!=0)
+        {
+            Node mid=midOdd(head);
+            Node head2=mid.next.next;
+            mid.next=null;
+            head2=reverse(head2);
+            Node prev=head;
+            Node curr=head2;
+            print(head);
+            print(head2);
+            while(prev!=null && curr!=null)
+            {
+                if(prev.data!=curr.data)
+                return false;
+                
+                prev=prev.next;
+                curr=curr.next;
+            }
+            return true;
+        }
+        else
+        {
+            Node mid=midEven(head);
+            Node head2=mid.next;
+            mid.next=null;
+            head2=reverse(head2);
+            Node prev=head;
+            Node curr=head2;
+            print(head);
+            print(head2);
+            while(prev!=null && curr!=null)
+            {
+                if(prev.data!=curr.data)
+                return false;
+                
+                curr=curr.next;
+                prev=prev.next;
+            }
+            return true;
+        }
+    }
+    
+	public static void main(String[] args) 
+	{
+	    Main ll=new Main();
+	    Scanner s=new Scanner(System.in);
+	    int n=s.nextInt();
+	    Node head=new Node(s.nextInt());
+	    Node tail=head;
+	    while(n!=1)
+	    {
+	        tail.next=new Node(s.nextInt());
+	        tail=tail.next;
+	        n--;
+	    }
+	    ll.print(head);
+	    System.out.println(ll.palindrome(head));
+	}
+}

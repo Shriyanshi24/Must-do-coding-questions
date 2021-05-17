@@ -1,0 +1,72 @@
+import java.util.*;
+class Node
+{
+    int data;
+    Node next;
+    
+    public Node(int data)
+    {
+        this.data=data;
+        this.next=null;
+    }
+}
+class LL
+{
+    public void print(Node head)
+    {
+        Node curr=head;
+        while(curr!=null)
+        {
+            System.out.print(curr.data+"->");
+            curr=curr.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    
+    public Node reverseInGroup(Node head,int k)
+    {
+        Node prev=null;
+        Node curr=head;
+        Node next=null;
+        int count=1;
+        while(curr!=null && count<=k)
+        {
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+            count++;
+        }
+        
+        // if linked list have more nodes after first k-nodes
+        if(next!=null)
+        {
+            head.next=reverseInGroup(next,k);
+        }
+        return prev;
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+	    Scanner s=new Scanner(System.in);
+	    LL ll=new LL();
+	    int n=s.nextInt();
+	    Node head=new Node(s.nextInt());
+	    Node tail=head;
+	    while(n!=1)
+	    {
+	        tail.next=new Node(s.nextInt());
+	        tail=tail.next;
+	        n--;
+	    }
+	    int k=s.nextInt();
+	    ll.print(head);
+	    
+	    head=ll.reverseInGroup(head,k);
+	    ll.print(head);
+	}
+}
